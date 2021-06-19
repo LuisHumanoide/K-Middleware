@@ -50,6 +50,12 @@ public class A1Process2 extends Activity {
             LongSpike spike = new LongSpike(data);
             String message = (String) spike.getIntensity();
             System.out.println(message);
+            LongSpike sendSpike1 = new LongSpike(Modalities.VISUAL, new Location(0), "message for area 2", 0);
+            send(AreaNames.A2Process1, sendSpike1.getByteArray());
+            
+            int n=9;
+            LongSpike sendSpike2 = new LongSpike(Modalities.MEMORY, new Location(1), n, 0);
+            send(AreaNames.A2Process1, sendSpike2.getByteArray());
 
         } catch (Exception ex) {
             Logger.getLogger(A1Process2.class.getName()).log(Level.SEVERE, null, ex);

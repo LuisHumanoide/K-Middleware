@@ -58,10 +58,13 @@ public class A1Process1 extends Activity {
      */
     public void send() {
         String info="mensaje";
+        int n=5;
      	/*Lo que se va a enviar en el spike debe ser serializable o un objeto simple como un string o entero*/
         LongSpike sendSpike1 = new LongSpike(Modalities.VISUAL, new Location(0), info, 0);
+        LongSpike sendSpike2 = new LongSpike(Modalities.MEMORY, new Location(0), n, 0);
         try {
             send(AreaNames.A1Process2, sendSpike1.getByteArray());
+            send(AreaNames.A2Process1, sendSpike2.getByteArray());
         } catch (IOException ex) {
             Logger.getLogger(A1Process1.class.getName()).log(Level.SEVERE, null, ex);
         }
