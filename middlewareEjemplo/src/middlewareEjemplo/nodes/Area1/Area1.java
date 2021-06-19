@@ -1,10 +1,7 @@
-package middlewareEjemplo.nodes.Funcion;
+package middlewareEjemplo.nodes.Area1;
 
 
 
-import middlewareEjemplo.nodes.Funcion.smallNodes.F3;
-import middlewareEjemplo.nodes.Funcion.smallNodes.F2;
-import middlewareEjemplo.nodes.Funcion.smallNodes.F1;
 import kmiddle2.nodes.areas.Area;
 import middlewareEjemplo.config.AreaNames;
 import utils.SimpleLogger;
@@ -17,11 +14,10 @@ public class Area1 extends Area{
     public Area1() {
         this.ID = AreaNames.Area1;
         this.namer = AreaNames.class;
-        addProcess(F1.class);
-	addProcess(F2.class);
-	addProcess(F3.class);
+        addProcess(A1Process1.class);
+	addProcess(A1Process2.class);
 	
-	//@AddProcess
+//@AddProcess
     }
 
     @Override
@@ -31,11 +27,10 @@ public class Area1 extends Area{
 
     @Override
     public void receive(int nodeID, byte[] data) {
-        send(AreaNames.F1,data);
-	send(AreaNames.F2,data);
-	send(AreaNames.F3,data);
+        send(AreaNames.A1Process1,data);
+	send(AreaNames.A1Process2,data);
 	
-	//@SendProcess
+//@SendProcess
     }
     
 }

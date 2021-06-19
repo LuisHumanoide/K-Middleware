@@ -8,6 +8,7 @@ import middlewareEjemplo.config.AreaNames;
 import spike.Modalities;
 import utils.LongSpike;
 import utils.SimpleLogger;
+import utils.numSync;
 
 /**
  *
@@ -38,6 +39,8 @@ public class @Process extends Activity {
     public void init() {
         SimpleLogger.log(this, "SMALL NODE @Process");
     }
+
+    numSync sync = new numSync(0);
 
     @Override
     public void receive(int nodeID, byte[] data) {

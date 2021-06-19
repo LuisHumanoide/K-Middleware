@@ -6,6 +6,8 @@
 package generator;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -19,8 +21,8 @@ public class GeneradorClases extends javax.swing.JFrame {
 
     private DefaultMutableTreeNode root;
     private DefaultTreeModel treeModel;
-    
-    String route="src/middlewareEjemplo/";
+
+    String route = "src/middlewareEjemplo/";
 
     /**
      * Creates new form GeneradorClases
@@ -28,7 +30,7 @@ public class GeneradorClases extends javax.swing.JFrame {
     public GeneradorClases() {
         initComponents();
         root = new DefaultMutableTreeNode("Nodes", true);
-        getList(root, new File(route+"nodes/"));
+        getList(root, new File(route + "nodes/"));
         treeModel = new DefaultTreeModel(root);
         jTree1.setModel(treeModel);
         readConfigs();
@@ -167,22 +169,23 @@ public class GeneradorClases extends javax.swing.JFrame {
     boolean exist = false;
 
     public void readConfigs() {
-        AreaNames = FileUtils.readFile(new File(route+"config/AreaNames.java"));
-        InitClass = FileUtils.readFile(new File(route+"config/Init.java"));
+        AreaNames = FileUtils.readFile(new File(route + "config/AreaNames.java"));
+        InitClass = FileUtils.readFile(new File(route + "config/Init.java"));
     }
 
     /**
      * Check if the big node exist
+     * Don't use a small node as a big node
      * @param path
      * @param name
-     * @return 
+     * @return
      */
     public boolean bigNodeExist(String path, String name) {
         String[] files = FileUtils.getFiles(path);
         boolean isRepeated = false;
         for (String file : files) {
             if (file.equals(path + "\\" + name + ".java")) {
-                JOptionPane.showMessageDialog(null, "Process to the exsting big node " +file+" will be added");
+                JOptionPane.showMessageDialog(null, "Process to the existing big node " + file + " will be added");
                 isRepeated = true;
                 break;
             }
@@ -203,7 +206,7 @@ public class GeneradorClases extends javax.swing.JFrame {
             String initNodes = "";
             String Import = "";
             String Pack = "";
-            String existingClass="";
+            String existingClass = "";
             if (exist) {
                 existingClass = FileUtils.readFile(new File(path + "\\" + Name + ".java"));
             }
@@ -215,13 +218,13 @@ public class GeneradorClases extends javax.swing.JFrame {
                         addProcess = addProcess + "addProcess(" + process.trim() + ".class);\n\t";
                         sendProcess = sendProcess + "send(AreaNames." + process.trim() + ",data);\n\t";
                         FileUtils.write(path + "/" + process.trim(), ProcessTemplate.replaceAll("@Process", process.trim()).replace("@package", Pack), "java");
-                        addAreas = addAreas + "public static int " + process.trim() + " = IDHelper.generateID(\"" + Name + "\", pon numero , 0);\n\t";
+                        addAreas = addAreas + "public static int " + process.trim() + " = IDHelper.generateID(\"" + Name + "\", @insertNumber , 0);\n\t";
                     }
                 }
                 /*
                 Si el Big Node es Nuevo
                  */
- 
+
                 if (!exist) {
                     BigNodeClass = BigNodeClass.replaceAll("@AddProcess", addProcess + "\n//@AddProcess");
                     BigNodeClass = BigNodeClass.replaceAll("@package", Pack);
@@ -231,9 +234,8 @@ public class GeneradorClases extends javax.swing.JFrame {
                     initNodes = Name + ".class.getName(),";
                     Import = "import " + path.replace("src\\", "").replace("\\", ".") + "." + Name;
                     FileUtils.write(path + "/" + Name, BigNodeClass, "java");
-
-                    FileUtils.write(route+"config/AreaNames", AreaNames.replace("//@addNodes", addAreas + "\n\t" + "//@addNodes"), "java");
-                    FileUtils.write(route+"config/Init", InitClass.replace("//@addNodes", initNodes + "\n\t\t" + "//@addNodes")
+                    FileUtils.write(route + "config/AreaNames", AreaNames.replace("//@addNodes", addAreas + "\n\t" + "//@addNodes"), "java");
+                    FileUtils.write(route + "config/Init", InitClass.replace("//@addNodes", initNodes + "\n\t\t" + "//@addNodes")
                             .replace("//@import", Import + ";\n" + "//@import"), "java");
                     readConfigs();
                 }
@@ -241,21 +243,48 @@ public class GeneradorClases extends javax.swing.JFrame {
                 if (exist) {
                     existingClass = existingClass.replaceAll("//@AddProcess", addProcess + "\n\t//@AddProcess");
                     existingClass = existingClass.replaceAll("//@SendProcess", sendProcess + "\n\t//@SendProcess");
-                    FileUtils.write(route+"config/AreaNames", AreaNames.replace("//@addNodes", addAreas + "\n\t" + "//@addNodes"), "java");
+                    FileUtils.write(route + "config/AreaNames", AreaNames.replace("//@addNodes", addAreas + "\n\t" + "//@addNodes"), "java");
                     FileUtils.write(path + "/" + Name, existingClass, "java");
                     readConfigs();
                 }
+
+                rewriteAreaNames(Name);
 
                 jTextField1.setText("");
                 jTextArea1.setText("");
 
             } else {
-                JOptionPane.showMessageDialog(this, "elija un path valido");
+                JOptionPane.showMessageDialog(this, "choose a valid path");
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    String path;
+    private int matches(String keyword, String text) {
+        int matches = 0;
+        Matcher matcher = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE).matcher(text);
+        while (matcher.find()) {
+            matches++;
+        }
+        return matches;
+    }
+
+    String replace(String text, String key, String areaName) {
+        int m = matches(key, text);
+        int t = matches("\"" + areaName + "\"", text);
+        System.out.println(" m: " + m + " , t:" + t);
+        for (int i = t - m; i < t; i++) {
+            text = text.replaceFirst(key, "" + (i));
+        }
+        return text;
+    }
+
+    void rewriteAreaNames(String areaName) {
+        String newAreaNames = replace(AreaNames, "@insertNumber", areaName);
+        FileUtils.write(route + "config/AreaNames", newAreaNames, "java");
+        readConfigs();
+    }
+
+    static String path;
     private void jTree1ValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTree1ValueChanged
 
         path = evt.getPath().getLastPathComponent().toString();

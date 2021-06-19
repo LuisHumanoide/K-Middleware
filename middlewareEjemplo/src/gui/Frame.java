@@ -11,7 +11,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import utils.layoutManager;
 
 /**
  *
@@ -28,7 +27,6 @@ public class Frame extends javax.swing.JFrame {
     public Frame(int index) {
         this.index = index;
         initComponents();
-        this.setLocation(layoutManager.points.get(index));
 
     }
 

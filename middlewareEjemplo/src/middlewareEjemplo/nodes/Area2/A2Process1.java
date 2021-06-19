@@ -1,4 +1,6 @@
-package middlewareEjemplo.nodes.Funcion.smallNodes;
+package middlewareEjemplo.nodes.Area2;
+
+
 
 import spike.Location;
 import kmiddle2.nodes.activities.Activity;
@@ -12,59 +14,57 @@ import utils.numSync;
 
 /**
  *
- *
+ * 
  */
-public class F2 extends Activity {
+public class A2Process1 extends Activity {
 
     /**
      * *************************************************************************
      * CONSTANTES
      * *************************************************************************
      */
-    /**
+
+     /**
      * *************************************************************************
      * CONSTRUCTOR Y METODOS PARA RECIBIR
      * *************************************************************************
      */
-    public F2() {
-        this.ID = AreaNames.F2;
+
+
+    public A2Process1() {
+        this.ID = AreaNames.A2Process1;
         this.namer = AreaNames.class;
     }
 
+
     @Override
     public void init() {
-        SimpleLogger.log(this, "SMALL NODE F2");
+        SimpleLogger.log(this, "SMALL NODE A2Process1");
     }
 
-    numSync sync = new numSync(4);
+    numSync sync = new numSync(0);
 
     @Override
     public void receive(int nodeID, byte[] data) {
         try {
             LongSpike spike = new LongSpike(data);
-            if (spike.getModality() == Modalities.VISUAL) {
-                Location l = (Location) spike.getLocation();
-                int index = l.getValues()[0];
-                String message = (String) spike.getIntensity();
-                System.out.println("mensaje recibido " + message);
-                sync.addReceived(index);
-                if (sync.isComplete()) {
-                    doAll();
-                }
-            }
 
         } catch (Exception ex) {
-            Logger.getLogger(F2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(A2Process1.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }  
 
-    /**
+     /**
      * ************************************************************************
      * METODOS
      * ************************************************************************
      */
-    public void doAll() {
-        System.out.println("se hace proceso");
-    }
+
+     public void send(){
+     	/*String info="mensaje";
+     	/*Lo que se va a enviar en el spike debe ser serializable o un objeto simple como un string o entero*/
+     	/*LongSpike sendSpike1 = new LongSpike(Modalities.VISUAL, new Location(0), info, 0);*/
+     }
+     
 
 }
