@@ -2,6 +2,22 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/gui/Frame.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/generator/GeneradorClases.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/middlewareEjemplo/nodes/Area2/A2Process1.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/middlewareEjemplo/config/Init.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/utils/SimpleLogger.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/generator/Java2sAutoTextField.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/middlewareEjemplo/nodes/Area1/A1Process2.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/generator/test.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/utils/Config.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/spike/Location.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/TemplateBigNode.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/middlewareEjemplo/config/AreaNames.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/middlewareEjemplo/nodes/Area1/Area1.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/middlewareEjemplo/nodes/Area2/Area2.java</file>
+            <file>file:/C:/Users/Laptop/Documents/GitHub/K-Middleware/middlewareEjemplo/src/middlewareEjemplo/nodes/Area1/A1Process1.java</file>
+        </group>
     </open-files>
 </project-private>
