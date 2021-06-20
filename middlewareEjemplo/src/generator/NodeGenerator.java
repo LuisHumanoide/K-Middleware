@@ -37,7 +37,6 @@ public class NodeGenerator extends javax.swing.JFrame {
         route=FileUtils.readFile(new File("route.txt")).trim();
         initComponents();
         root = new DefaultMutableTreeNode("Nodes", true);
-        possible.add("Area1");
         updateTree();
         jButton3.setEnabled(false);
         dframe = new DirectoryFrame(this);
