@@ -19,32 +19,52 @@ import javax.swing.tree.DefaultTreeModel;
 import utils.FileUtils;
 
 /**
- *
+ * Generador de Big Nodes y Small nodes sencillo
+ * Para construir el generador y ejecutarlo sin compilar, tendrán que cambiar la clase principal 
+ * en las propiedades del IDE
  * @author Luis Humanoide
  */
 public class NodeGenerator extends javax.swing.JFrame {
 
+    /**
+     * La ruta donde se deberían generar los nodos
+     */
     String route;
 
+    /**
+     * Variables para la creación del arbol de directorios
+     */
     private DefaultMutableTreeNode root;
     private DefaultTreeModel treeModel;
+    //Frame para elegir la ubicación de los nuevos directorios a crear
     DirectoryFrame dframe;
 
     /**
-     * Creates new form GeneradorClases
+     * Constructor de la clase
      */
     public NodeGenerator() {
+        //Leer la ruta principal
         route=FileUtils.readFile(new File("route.txt")).trim();
+        //Iniciar componentes
         initComponents();
+        //Raiz del arbol de elección de archivos
         root = new DefaultMutableTreeNode("Nodes", true);
+        //Actualizar rbol
         updateTree();
+        //El boton de crear directorio esta deshabilitado hasta que se seleccione una ruta
         jButton3.setEnabled(false);
+        //Declarar el frame de creación de directorio
         dframe = new DirectoryFrame(this);
         dframe.setLocation((int) this.getLocation().getX(), this.getHeight() + this.getY());
+        //Iniciar el arbol
         renderTree();
+        //leer los archivos de templates
         readConfigs();
     }
 
+    /**
+     * Renderizar el arbol de rutas
+     */
     void renderTree() {
         DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) jTree1.getCellRenderer();
         Icon closedIcon = new ImageIcon("icon.png");
@@ -55,6 +75,11 @@ public class NodeGenerator extends javax.swing.JFrame {
         renderer.setLeafIcon(leafIcon);
     }
 
+    /**
+     * Obtener la lista para la creación del arbol de directorios
+     * @param node
+     * @param f 
+     */
     public void getList(DefaultMutableTreeNode node, File f) {
         if (f.isDirectory()) {
             // We keep only JAVA source file for display in this HowTo
@@ -67,6 +92,9 @@ public class NodeGenerator extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Actualizar el arbol, siempre deben de tener una carpeta llamada Nodes
+     */
     void updateTree() {
         root.removeAllChildren();
         getList(root, new File(route + "nodes/"));
@@ -240,6 +268,9 @@ public class NodeGenerator extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Templates para la creación de BigNodes y SmallNodes
+     */
     String BigNodeTemplate = FileUtils.readFile(new File("TemplateBigNode.java"));
     String ProcessTemplate = FileUtils.readFile(new File("TemplateProcess.java"));
     String AreaNames;
@@ -248,11 +279,17 @@ public class NodeGenerator extends javax.swing.JFrame {
     String[] Process;
     boolean exist = false;
 
+    /**
+     * Lee los archivos de las templates
+     */
     public void readConfigs() {
         AreaNames = FileUtils.readFile(new File(route + "config/AreaNames.java"));
         InitClass = FileUtils.readFile(new File(route + "config/Init.java"));
     }
 
+    /**
+     * Expande todos los nodos del arbol
+     */
     private void expandAllNodes() {
         int j = jTree1.getRowCount();
         int i = 0;
@@ -264,8 +301,8 @@ public class NodeGenerator extends javax.swing.JFrame {
     }
 
     /**
-     * Check if the big node exist Don't use a small node as a big node
-     *
+     * Checa si existe el BigNode cuando se pone el nombre en el field de BigNode
+     * No poner smallNode
      * @param path
      * @param name
      * @return
@@ -283,11 +320,19 @@ public class NodeGenerator extends javax.swing.JFrame {
         return isRepeated;
     }
 
+    /**
+     * Código que se ejecuta al presionar el botón de creación de nodos
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        //Los procesos (SmallNodes) serán separados por enters
         Process = jTextArea1.getText().split("(?=\\s)");
+        //Nombre del BigNode
         String Name = jTextField1.getText().trim();
+        
         if (Name.trim().length() > 0) {
+            //checar si el BigNode se repite, así se agregarán los procesos al BigNode existente
             exist = bigNodeExist(path, Name);
             BigNodeClass = BigNodeTemplate.replaceAll("@Name", Name);
             String addProcess = "";
@@ -300,14 +345,16 @@ public class NodeGenerator extends javax.swing.JFrame {
             if (exist) {
                 existingClass = FileUtils.readFile(new File(path + "\\" + Name + ".java"));
             }
-
+            
             Pack = "package " + path.replace("src\\", "").replace("\\", ".") + ";\n\n";
             if (path != null) {
                 for (String process : Process) {
                     if (process.length() > 0) {
                         addProcess = addProcess + "addProcess(" + process.trim() + ".class);\n\t";
                         sendProcess = sendProcess + "send(AreaNames." + process.trim() + ",data);\n\t";
+                        //Escribe un nuevo archivo Java a partir del template de Process
                         FileUtils.write(path + "/" + process.trim(), ProcessTemplate.replaceAll("@Process", process.trim()).replace("@package", Pack), "java");
+                        //Añade el proceso al BigNode existente
                         addAreas = addAreas + "public static int " + process.trim() + " = IDHelper.generateID(\"" + Name + "\", @insertNumber , 0);\n\t";
                     }
                 }
@@ -316,6 +363,9 @@ public class NodeGenerator extends javax.swing.JFrame {
                  */
 
                 if (!exist) {
+                    /**
+                     * Modificación del template de BigNode
+                     */
                     BigNodeClass = BigNodeClass.replaceAll("@AddProcess", addProcess + "\n//@AddProcess");
                     BigNodeClass = BigNodeClass.replaceAll("@package", Pack);
                     BigNodeClass = BigNodeClass.replaceAll("@SendProcess", sendProcess + "\n//@SendProcess");
@@ -323,21 +373,28 @@ public class NodeGenerator extends javax.swing.JFrame {
                     addAreas = "public static int " + Name + " = IDHelper.generateID(\"" + Name + "\", 0, 0);\n\t" + addAreas;
                     initNodes = Name + ".class.getName(),";
                     Import = "import " + path.replace("src\\", "").replace("\\", ".") + "." + Name;
+                    //Crea la clase del BigNode
                     FileUtils.write(path + "/" + Name, BigNodeClass, "java");
+                    //Modifica la clase AreaNames.java
                     FileUtils.write(route + "config/AreaNames", AreaNames.replace("//@addNodes", addAreas + "\n\t" + "//@addNodes"), "java");
+                    //Agrega el area a init
                     FileUtils.write(route + "config/Init", InitClass.replace("//@addNodes", initNodes + "\n\t\t" + "//@addNodes")
                             .replace("//@import", Import + ";\n" + "//@import"), "java");
+                    //Actualiza las variables que almacenan las templates
                     readConfigs();
                 }
-
+                //Si el BigNode existe
                 if (exist) {
+                    //Reescribe en la clase del BigNode existente
                     existingClass = existingClass.replaceAll("//@AddProcess", addProcess + "\n\t//@AddProcess");
                     existingClass = existingClass.replaceAll("//@SendProcess", sendProcess + "\n\t//@SendProcess");
+                    //Agrega el proceso a AreaNames
                     FileUtils.write(route + "config/AreaNames", AreaNames.replace("//@addNodes", addAreas + "\n\t" + "//@addNodes"), "java");
                     FileUtils.write(path + "/" + Name, existingClass, "java");
                     readConfigs();
                 }
-
+                
+                //Reescribe el archivo AreaNames para asignar indices de procesos
                 rewriteAreaNames(Name);
 
                 jTextField1.setText("");
@@ -349,6 +406,7 @@ public class NodeGenerator extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
     private int matches(String keyword, String text) {
         int matches = 0;
         Matcher matcher = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE).matcher(text);
@@ -367,6 +425,9 @@ public class NodeGenerator extends javax.swing.JFrame {
         return text;
     }
 
+    /*
+    Reescribir AreaNames para asignar el ID a los procesos
+    */
     void rewriteAreaNames(String areaName) {
         String newAreaNames = replace(AreaNames, "@insertNumber", areaName);
         FileUtils.write(route + "config/AreaNames", newAreaNames, "java");
@@ -401,6 +462,10 @@ public class NodeGenerator extends javax.swing.JFrame {
         dframe.setLocation((int) this.getLocation().getX(), this.getHeight() + this.getY());
     }//GEN-LAST:event_formComponentMoved
 
+    /**
+     * Crear nuevo directorio
+     * @param dir 
+     */
     public void createDir(String dir) {
         File directorio = new File(dir);
         if (!directorio.exists()) {
@@ -412,6 +477,10 @@ public class NodeGenerator extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Hace la lista de BigNodes existente, para la función de autocompletar
+     * @param path 
+     */
     void listBigNodes(String path) {
         possible.clear();
         String[] files = FileUtils.getFiles(path);

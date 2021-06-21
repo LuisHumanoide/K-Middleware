@@ -10,7 +10,6 @@ public class AreaNames {
 	public static int Area2 = IDHelper.generateID("Area2", 0, 0);
 	public static int A2Process1 = IDHelper.generateID("Area2", 1 , 0);
 	
-	
 	//@addNodes
         //no quitar el comentario de add Nodes
 }
