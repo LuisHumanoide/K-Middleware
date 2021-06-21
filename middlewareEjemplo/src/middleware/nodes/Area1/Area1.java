@@ -15,9 +15,7 @@ public class Area1 extends Area{
         this.ID = AreaNames.Area1;
         this.namer = AreaNames.class;
         addProcess(A1Process1.class);
-	addProcess(A1Process2.class);
-	
-	
+	addProcess(A1Process2.class);		
 	//@AddProcess
     }
 
@@ -29,9 +27,7 @@ public class Area1 extends Area{
     @Override
     public void receive(int nodeID, byte[] data) {
         send(AreaNames.A1Process1,data);
-	send(AreaNames.A1Process2,data);
-	
-	
+	send(AreaNames.A1Process2,data);		
 	//@SendProcess
     }
     
