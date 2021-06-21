@@ -347,13 +347,16 @@ public class NodeGenerator extends javax.swing.JFrame {
             }
             
             Pack = "package " + path.replace("src\\", "").replace("\\", ".") + ";\n\n";
+            String packroute=route.replace("src/", "").replaceAll("/", ".");
+            packroute=packroute.substring(0, packroute.length()-1);
+            
             if (path != null) {
                 for (String process : Process) {
                     if (process.length() > 0) {
                         addProcess = addProcess + "addProcess(" + process.trim() + ".class);\n\t";
                         sendProcess = sendProcess + "send(AreaNames." + process.trim() + ",data);\n\t";
                         //Escribe un nuevo archivo Java a partir del template de Process
-                        FileUtils.write(path + "/" + process.trim(), ProcessTemplate.replaceAll("@Process", process.trim()).replace("@package", Pack), "java");
+                        FileUtils.write(path + "/" + process.trim(), ProcessTemplate.replaceAll("@Process", process.trim()).replaceAll("@route", packroute).replace("@package", Pack), "java");
                         //Añade el proceso al BigNode existente
                         addAreas = addAreas + "public static int " + process.trim() + " = IDHelper.generateID(\"" + Name + "\", @insertNumber , 0);\n\t";
                     }
@@ -368,6 +371,7 @@ public class NodeGenerator extends javax.swing.JFrame {
                      */
                     BigNodeClass = BigNodeClass.replaceAll("@AddProcess", addProcess + "\n//@AddProcess");
                     BigNodeClass = BigNodeClass.replaceAll("@package", Pack);
+                    BigNodeClass = BigNodeClass.replaceAll("@route", packroute);
                     BigNodeClass = BigNodeClass.replaceAll("@SendProcess", sendProcess + "\n//@SendProcess");
 
                     addAreas = "public static int " + Name + " = IDHelper.generateID(\"" + Name + "\", 0, 0);\n\t" + addAreas;

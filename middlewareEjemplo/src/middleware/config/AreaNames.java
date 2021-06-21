@@ -1,4 +1,4 @@
-package middlewareEjemplo.config;
+package middleware.config;
 
 import kmiddle2.util.IDHelper;
 public class AreaNames {
@@ -9,6 +9,11 @@ public class AreaNames {
 	
 	public static int Area2 = IDHelper.generateID("Area2", 0, 0);
 	public static int A2Process1 = IDHelper.generateID("Area2", 1 , 0);
+	
+	
+	public static int c1 = IDHelper.generateID("Area2", 2 , 0);
+	
+	public static int Area3 = IDHelper.generateID("Area3", 0, 0);
 	
 	//@addNodes
         //no quitar el comentario de add Nodes

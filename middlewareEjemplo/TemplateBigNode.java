@@ -1,7 +1,7 @@
 @package
 
 import kmiddle2.nodes.areas.Area;
-import middlewareEjemplo.config.AreaNames;
+import @route.config.AreaNames;
 import utils.SimpleLogger;
 
 /**

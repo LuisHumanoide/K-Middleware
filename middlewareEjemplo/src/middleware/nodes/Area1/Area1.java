@@ -1,9 +1,9 @@
-package middlewareEjemplo.nodes.Area1;
+package middleware.nodes.Area1;
 
 
 
 import kmiddle2.nodes.areas.Area;
-import middlewareEjemplo.config.AreaNames;
+import middleware.config.AreaNames;
 import utils.SimpleLogger;
 
 /**
@@ -17,7 +17,8 @@ public class Area1 extends Area{
         addProcess(A1Process1.class);
 	addProcess(A1Process2.class);
 	
-//@AddProcess
+	
+	//@AddProcess
     }
 
     @Override
@@ -30,7 +31,8 @@ public class Area1 extends Area{
         send(AreaNames.A1Process1,data);
 	send(AreaNames.A1Process2,data);
 	
-//@SendProcess
+	
+	//@SendProcess
     }
     
 }

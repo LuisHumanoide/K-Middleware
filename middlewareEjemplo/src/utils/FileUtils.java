@@ -9,7 +9,6 @@ package utils;
  *
  * @author Humanoide
  */
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -24,8 +23,6 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
-import matrix.matrix;
 
 /**
  *
@@ -101,18 +98,6 @@ public class FileUtils {
         }
     }
 
-
-    public static void WriteObjectToFile(Object serObj, String filepath) {
-        try {
-            FileOutputStream fileOut = new FileOutputStream(filepath + ".amap");
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(serObj);
-            objectOut.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
 
 

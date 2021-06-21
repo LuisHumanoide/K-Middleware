@@ -1,9 +1,9 @@
-package middlewareEjemplo.config;
+package middleware.config;
 
 import kmiddle2.nodes.service.Igniter;
 import utils.SimpleLogger;
-import middlewareEjemplo.nodes.Area1.Area1;
-import middlewareEjemplo.nodes.Area2.Area2;
+import middleware.nodes.Area1.Area1;
+import middleware.nodes.Area2.Area2;
 //@import
 
 

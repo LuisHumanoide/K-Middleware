@@ -1,10 +1,10 @@
-package middlewareEjemplo.nodes.Area2;
+package middleware.nodes.Area2;
 
 import spike.Location;
 import kmiddle2.nodes.activities.Activity;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import middlewareEjemplo.config.AreaNames;
+import middleware.config.AreaNames;
 import spike.Modalities;
 import utils.LongSpike;
 import utils.SimpleLogger;
