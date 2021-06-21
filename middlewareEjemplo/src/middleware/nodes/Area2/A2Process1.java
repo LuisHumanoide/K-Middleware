@@ -46,9 +46,10 @@ public class A2Process1 extends Activity {
             LongSpike spike = new LongSpike(data);
             if (spike.getModality() == Modalities.VISUAL) {
                 String message = (String) spike.getIntensity();
-                System.out.println(message + " from visual");
+                System.out.println("Spike from A1Process1: "+message+" from modality : Visual");
             }
             if (spike.getModality() == Modalities.MEMORY) {
+                System.out.println("Spike from from modality : Memory , value "+(int)spike.getIntensity());
                 Location l = (Location) spike.getLocation();
                 if (l.index[0] == 0) {
                     n1 = (int) spike.getIntensity();

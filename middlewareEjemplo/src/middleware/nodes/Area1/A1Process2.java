@@ -49,7 +49,7 @@ public class A1Process2 extends Activity {
         try {
             LongSpike spike = new LongSpike(data);
             String message = (String) spike.getIntensity();
-            System.out.println(message);
+            System.out.println("Spike from A1Process1: "+message);
             LongSpike sendSpike1 = new LongSpike(Modalities.VISUAL, new Location(0), "message for area 2", 0);
             send(AreaNames.A2Process1, sendSpike1.getByteArray());
             
