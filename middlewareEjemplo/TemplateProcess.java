@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import @route.config.AreaNames;
 import spike.Modalities;
-import utils.LongSpike;
+import spike.Spike;
 import utils.SimpleLogger;
 import utils.numSync;
 

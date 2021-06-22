@@ -6,7 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import middleware.config.AreaNames;
 import spike.Modalities;
-import utils.LongSpike;
+import spike.LongSpike;
+import spike.Spike;
 import utils.SimpleLogger;
 import utils.numSync;
 
@@ -43,7 +44,7 @@ public class A2Process1 extends Activity {
     @Override
     public void receive(int nodeID, byte[] data) {
         try {
-            LongSpike spike = new LongSpike(data);
+            Spike spike = new Spike(data);
             if (spike.getModality() == Modalities.VISUAL) {
                 String message = (String) spike.getIntensity();
                 System.out.println("Spike from A1Process2: "+message+" from modality : Visual");

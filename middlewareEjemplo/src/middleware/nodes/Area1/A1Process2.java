@@ -8,7 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import middleware.config.AreaNames;
 import spike.Modalities;
-import utils.LongSpike;
+import spike.LongSpike;
+import spike.Spike;
 import utils.SimpleLogger;
 import utils.numSync;
 
@@ -47,14 +48,14 @@ public class A1Process2 extends Activity {
     @Override
     public void receive(int nodeID, byte[] data) {
         try {
-            LongSpike spike = new LongSpike(data);
+            Spike spike = new Spike(data);
             String message = (String) spike.getIntensity();
             System.out.println("Spike from A1Process1: "+message);
-            LongSpike sendSpike1 = new LongSpike(Modalities.VISUAL, new Location(0), "message for area 2", 0);
+            Spike sendSpike1 = new Spike(Modalities.VISUAL, new Location(0), "message for area 2", 0);
             send(AreaNames.A2Process1, sendSpike1.getByteArray());
             
             int n=9;
-            LongSpike sendSpike2 = new LongSpike(Modalities.MEMORY, new Location(1), n, 0);
+            Spike sendSpike2 = new Spike(Modalities.MEMORY, new Location(1), n, 0);
             send(AreaNames.A2Process1, sendSpike2.getByteArray());
 
         } catch (Exception ex) {
