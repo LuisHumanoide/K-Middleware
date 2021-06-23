@@ -2,7 +2,7 @@ package middleware.nodes.Area2;
 
 
 
-import kmiddle2.nodes.areas.Area;
+import cFramework.nodes.area.Area;
 import middleware.config.AreaNames;
 import utils.SimpleLogger;
 
@@ -14,8 +14,7 @@ public class Area2 extends Area{
     public Area2() {
         this.ID = AreaNames.Area2;
         this.namer = AreaNames.class;
-        addProcess(A2Process1.class);
-	
+        addProcess(A2Process1.class);	
 	//@AddProcess
     }
 
@@ -25,7 +24,7 @@ public class Area2 extends Area{
     }
 
     @Override
-    public void receive(int nodeID, byte[] data) {
+    public void receive(long nodeID, byte[] data) {
         send(AreaNames.A2Process1,data);
 	
 	//@SendProcess

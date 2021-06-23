@@ -1,6 +1,6 @@
 @package
 
-import kmiddle2.nodes.areas.Area;
+import cFramework.nodes.area.Area;
 import @route.config.AreaNames;
 import utils.SimpleLogger;
 
@@ -21,7 +21,7 @@ public class @Name extends Area{
     }
 
     @Override
-    public void receive(int nodeID, byte[] data) {
+    public void receive(long nodeID, byte[] data) {
         @SendProcess
     }
     

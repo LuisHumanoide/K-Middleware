@@ -1,13 +1,13 @@
 package middleware.nodes.Area2;
 
+import cFramework.communications.spikes.Spike;
 import spike.Location;
-import kmiddle2.nodes.activities.Activity;
+import cFramework.nodes.process.Process;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import middleware.config.AreaNames;
 import spike.Modalities;
-import spike.LongSpike;
-import spike.Spike;
 import utils.SimpleLogger;
 import utils.numSync;
 
@@ -15,7 +15,7 @@ import utils.numSync;
  *
  *
  */
-public class A2Process1 extends Activity {
+public class A2Process1 extends Process {
 
     /**
      * *************************************************************************
@@ -34,33 +34,31 @@ public class A2Process1 extends Activity {
 
     @Override
     public void init() {
-        SimpleLogger.log(this, "SMALL NODE A2Process1");
+        //SimpleLogger.log(this, "SMALL NODE A2Process1");
     }
 
-    numSync sync = new numSync(2);
+    
+
     int n1 = 0;
     int n2 = 0;
-
+    numSync sync = new numSync(2);
     @Override
-    public void receive(int nodeID, byte[] data) {
+    public void receive(long nodeID, byte[] data) {
         try {
             Spike spike = new Spike(data);
-            if (spike.getModality() == Modalities.VISUAL) {
-                String message = (String) spike.getIntensity();
-                System.out.println("Spike from A1Process2: "+message+" from modality : Visual");
-            }
             if (spike.getModality() == Modalities.MEMORY) {
-                System.out.println("Spike from from modality : Memory , value "+(int)spike.getIntensity());
+                System.out.println(this.namer.toString() + " value " + (int) spike.getIntensity());
                 Location l = (Location) spike.getLocation();
-                if (l.index[0] == 0) {
+                if (l.getValues()[0] == 0) {
                     n1 = (int) spike.getIntensity();
                 }
-                if (l.index[0] == 1) {
+                if (l.getValues()[0] == 1) {
                     n2 = (int) spike.getIntensity();
                 }
-                sync.addReceived(l.index[0]);
+                sync.addReceived(l.getValues()[0]);
                 if (sync.isComplete()) {
-                    System.out.println(" sum is " + (n1 + n2) + "   n1 is " + n1 + "   n2 is " + n2);
+                    System.out.println("La suma es " + (n1 + n2));
+                    send();
                 }
             }
 
@@ -75,9 +73,18 @@ public class A2Process1 extends Activity {
      * ************************************************************************
      */
     public void send() {
-        /*String info="mensaje";
-     	/*Lo que se va a enviar en el spike debe ser serializable o un objeto simple como un string o entero*/
- /*LongSpike sendSpike1 = new LongSpike(Modalities.VISUAL, new Location(0), info, 0);*/
+        float floatArray[]={0.1f,0.2f,0.5f,0.8f};
+        String string="DLPFC";
+        CustomClass custom=new CustomClass(string,floatArray);
+        
+        Spike spike=new Spike(Modalities.PYtD,0,custom,0);
+
+        try {
+            send(AreaNames.A3Process1, spike.getByteArray());
+        } catch (IOException ex) {
+            Logger.getLogger(A2Process1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

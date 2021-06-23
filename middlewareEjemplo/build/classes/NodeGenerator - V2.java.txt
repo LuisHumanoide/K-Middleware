@@ -358,7 +358,7 @@ public class NodeGenerator extends javax.swing.JFrame {
                         //Escribe un nuevo archivo Java a partir del template de Process
                         FileUtils.write(path + "/" + process.trim(), ProcessTemplate.replaceAll("@Process", process.trim()).replaceAll("@route", packroute).replace("@package", Pack), "java");
                         //Añade el proceso al BigNode existente
-                        addAreas = addAreas + "public static long " + process.trim() + " = IDHelper.generateID(\"" + Name + "\", \"" + process.trim() + "\" );\n\t";
+                        addAreas = addAreas + "public static int " + process.trim() + " = IDHelper.generateID(\"" + Name + "\", @insertNumber , 0);\n\t";
                     }
                 }
                 /*
@@ -374,7 +374,7 @@ public class NodeGenerator extends javax.swing.JFrame {
                     BigNodeClass = BigNodeClass.replaceAll("@route", packroute);
                     BigNodeClass = BigNodeClass.replaceAll("@SendProcess", sendProcess + "\n//@SendProcess");
 
-                    addAreas = "public static long " + Name + " = IDHelper.generateID(\"" + Name + "\", \"\");\n\t" + addAreas;
+                    addAreas = "public static int " + Name + " = IDHelper.generateID(\"" + Name + "\", 0, 0);\n\t" + addAreas;
                     initNodes = Name + ".class.getName(),";
                     Import = "import " + path.replace("src\\", "").replace("\\", ".") + "." + Name;
                     //Crea la clase del BigNode
@@ -398,6 +398,8 @@ public class NodeGenerator extends javax.swing.JFrame {
                     readConfigs();
                 }
                 
+                //Reescribe el archivo AreaNames para asignar indices de procesos
+                rewriteAreaNames(Name);
 
                 jTextField1.setText("");
                 jTextArea1.setText("");
@@ -409,6 +411,32 @@ public class NodeGenerator extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
+    private int matches(String keyword, String text) {
+        int matches = 0;
+        Matcher matcher = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE).matcher(text);
+        while (matcher.find()) {
+            matches++;
+        }
+        return matches;
+    }
+
+    String replace(String text, String key, String areaName) {
+        int m = matches(key, text);
+        int t = matches("\"" + areaName + "\"", text);
+        for (int i = t - m; i < t; i++) {
+            text = text.replaceFirst(key, "" + (i));
+        }
+        return text;
+    }
+
+    /*
+    Reescribir AreaNames para asignar el ID a los procesos
+    */
+    void rewriteAreaNames(String areaName) {
+        String newAreaNames = replace(AreaNames, "@insertNumber", areaName);
+        FileUtils.write(route + "config/AreaNames", newAreaNames, "java");
+        readConfigs();
+    }
 
     static String path;
     private void jTree1ValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTree1ValueChanged

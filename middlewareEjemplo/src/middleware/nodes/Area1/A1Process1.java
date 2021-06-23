@@ -1,22 +1,20 @@
 package middleware.nodes.Area1;
 
+import cFramework.communications.spikes.Spike;
 import java.io.IOException;
 import spike.Location;
-import kmiddle2.nodes.activities.Activity;
+import cFramework.nodes.process.Process;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import middleware.config.AreaNames;
 import spike.Modalities;
-import spike.LongSpike;
-import spike.Spike;
-import utils.SimpleLogger;
 import utils.numSync;
 
 /**
  *
  *
  */
-public class A1Process1 extends Activity {
+public class A1Process1 extends Process {
 
     public A1Process1() {
         this.ID = AreaNames.A1Process1;
@@ -31,7 +29,7 @@ public class A1Process1 extends Activity {
     numSync sync = new numSync(0);
 
     @Override
-    public void receive(int nodeID, byte[] data) {
+    public void receive(long nodeID, byte[] data) {
         try {
             
 
@@ -46,11 +44,12 @@ public class A1Process1 extends Activity {
      * ************************************************************************
      */
     public void send() {
+        //Modalidad visual
         String info="mensaje";
-        int n=5;
-     	/*Lo que se va a enviar en el spike debe ser serializable o un objeto simple como un string o entero*/
         Spike sendSpike1 = new Spike(Modalities.VISUAL, new Location(0), info, 0);
-        Spike sendSpike2 = new Spike(Modalities.MEMORY, new Location(0), n, 0);
+        //Modalidad memoria
+        int value=5;
+        Spike sendSpike2=new Spike(Modalities.MEMORY,new Location(0),value,0);
         try {
             send(AreaNames.A1Process2, sendSpike1.getByteArray());
             send(AreaNames.A2Process1, sendSpike2.getByteArray());

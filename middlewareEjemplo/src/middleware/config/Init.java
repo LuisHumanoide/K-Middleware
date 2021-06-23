@@ -1,9 +1,10 @@
 package middleware.config;
 
-import kmiddle2.nodes.service.Igniter;
+import cFramework.nodes.service.Igniter;
 import utils.SimpleLogger;
 import middleware.nodes.Area1.Area1;
 import middleware.nodes.Area2.Area2;
+import middleware.nodes.Area3.Area3;
 //@import
 
 
@@ -18,6 +19,7 @@ public class Init extends Igniter {
         String[] areaNames = {
 		Area1.class.getName(),
 		Area2.class.getName(),
+		Area3.class.getName(),
 		//@addNodes
         };
 

@@ -1,12 +1,12 @@
 @package
 
 import spike.Location;
-import kmiddle2.nodes.activities.Activity;
+import cFramework.nodes.process.Process;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import @route.config.AreaNames;
 import spike.Modalities;
-import spike.Spike;
+import cFramework.communications.spikes.Spike;
 import utils.SimpleLogger;
 import utils.numSync;
 
@@ -14,19 +14,7 @@ import utils.numSync;
  *
  * 
  */
-public class @Process extends Activity {
-
-    /**
-     * *************************************************************************
-     * CONSTANTES
-     * *************************************************************************
-     */
-
-     /**
-     * *************************************************************************
-     * CONSTRUCTOR Y METODOS PARA RECIBIR
-     * *************************************************************************
-     */
+public class @Process extends Process {
 
 
     public @Process() {
@@ -37,31 +25,24 @@ public class @Process extends Activity {
 
     @Override
     public void init() {
-        SimpleLogger.log(this, "SMALL NODE @Process");
+        //SimpleLogger.log(this, "SMALL NODE @Process");
     }
 
     numSync sync = new numSync(0);
 
     @Override
-    public void receive(int nodeID, byte[] data) {
+    public void receive(long nodeID, byte[] data) {
         try {
-            LongSpike spike = new LongSpike(data);
+            Spike spike = new Spike(data);
 
         } catch (Exception ex) {
             Logger.getLogger(@Process.class.getName()).log(Level.SEVERE, null, ex);
         }
     }  
 
-     /**
-     * ************************************************************************
-     * METODOS
-     * ************************************************************************
-     */
 
      public void send(){
-     	/*String info="mensaje";
-     	/*Lo que se va a enviar en el spike debe ser serializable o un objeto simple como un string o entero*/
-     	/*LongSpike sendSpike1 = new LongSpike(Modalities.VISUAL, new Location(0), info, 0);*/
+
      }
      
 
