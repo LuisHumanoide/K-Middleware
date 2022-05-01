@@ -1,0 +1,34 @@
+digraph G{
+rankdir="LR"
+newrank="true" 
+A1Process1 [ shape="rectangle" ] 
+A1Process2 [ shape="rectangle" ] 
+A2Process1 [ shape="rectangle" ] 
+A3Process1 [ shape="rectangle" ] 
+
+
+A1Process1 -> A1Process2 
+A1Process1 -> A2Process1 
+A1Process2 -> A2Process1 
+A2Process1 -> A3Process1 
+
+subgraph clusterArea1 {
+ label="Area1"
+rank="same"
+A1Process1
+A1Process2
+}
+
+subgraph clusterArea2 {
+ label="Area2"
+rank="same"
+A2Process1
+}
+
+subgraph clusterArea3 {
+ label="Area3"
+rank="same"
+A3Process1
+}
+
+}

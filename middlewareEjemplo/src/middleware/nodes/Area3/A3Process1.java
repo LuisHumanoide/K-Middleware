@@ -2,6 +2,8 @@ package middleware.nodes.Area3;
 
 
 
+import cFramework.communications.routeTables.NodeRouteTable;
+import cFramework.communications.routeTables.SingletonNodeRouteTable;
 import spike.Location;
 import cFramework.nodes.process.Process;
 import java.util.logging.Level;
@@ -44,6 +46,8 @@ public class A3Process1 extends Process {
                     System.out.println("valor flotante : "+value);
                 }
             }
+            
+            
 
         } catch (Exception ex) {
             Logger.getLogger(A3Process1.class.getName()).log(Level.SEVERE, null, ex);

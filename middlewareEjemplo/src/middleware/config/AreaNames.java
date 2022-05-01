@@ -12,7 +12,7 @@ public class AreaNames {
 		
 	public static long Area3 = IDHelper.generateID("Area3", "");
 	public static long A3Process1 = IDHelper.generateID("Area3", "A3Process1" );
-	
+        	
 	
 	//@addNodes
         //no quitar el comentario de add Nodes
