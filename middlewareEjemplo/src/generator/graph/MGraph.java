@@ -26,13 +26,12 @@ public class MGraph {
     static ArrayList<GArea> areas=new ArrayList();;
     static ArrayList<GSmallNode> nodes=new ArrayList();;
     static HashSet<String> allSmallNodes=new HashSet();;
-    static String path = "src/middleware/nodes";
     
-    public static void generateGraphs(){
+    public static void generateGraphs(String path){
         areas.clear();
         nodes.clear();
         allSmallNodes.clear();
-        walkin(new File(path));
+        walkin(new File(path+"/nodes"));
         generateNodeGraph();
         generateProcessGraph();
     }
@@ -129,8 +128,8 @@ public class MGraph {
         }
         c = c + "}";
         
-        FileUtils.write("nodeDiagram", c, "txt");
-        generateImg("nodeDiagram","png","circo");
+        FileUtils.write("graphs/nodeDiagram", c, "txt");
+        generateImg("graphs/nodeDiagram","png","circo");
         
     }
     
@@ -164,8 +163,8 @@ public class MGraph {
 
         c = c + "\n}";
 
-        FileUtils.write("proccessDiagram", c, "txt");
-        generateImg("proccessDiagram","png","dot");
+        FileUtils.write("graphs/proccessDiagram", c, "txt");
+        generateImg("graphs/proccessDiagram","png","dot");
 
     }
     

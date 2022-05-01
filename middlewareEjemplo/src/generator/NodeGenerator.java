@@ -52,6 +52,7 @@ public class NodeGenerator extends javax.swing.JFrame {
         route=FileUtils.readFile(new File("route.txt")).trim();
         //Iniciar componentes
         initComponents();
+        MGraph.generateGraphs(route);
         //Raiz del arbol de elección de archivos
         root = new DefaultMutableTreeNode("Nodes", true);
         //Actualizar rbol
@@ -214,6 +215,7 @@ public class NodeGenerator extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setBackground(new java.awt.Color(147, 169, 140));
         jButton4.setText("<html><small>Open template<br> Big Node</small></html>");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,6 +223,7 @@ public class NodeGenerator extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setBackground(new java.awt.Color(147, 169, 140));
         jButton5.setText("<html><small>Open template <br>Small Node</small></html>");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,6 +231,8 @@ public class NodeGenerator extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setBackground(new java.awt.Color(151, 181, 202));
+        jButton6.setForeground(new java.awt.Color(0, 0, 0));
         jButton6.setText("<html><small>View <br>node diagram</small></html>");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,6 +240,8 @@ public class NodeGenerator extends javax.swing.JFrame {
             }
         });
 
+        jButton7.setBackground(new java.awt.Color(151, 181, 202));
+        jButton7.setForeground(new java.awt.Color(0, 0, 0));
         jButton7.setText("<html><small>View <br>proccess diagram</small></html>");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -456,6 +463,7 @@ public class NodeGenerator extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "choose a valid path");
             }
         }
+        MGraph.generateGraphs(route);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
@@ -513,8 +521,6 @@ public class NodeGenerator extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        //MGraph.path=route;
-        MGraph.generateGraphs();
          try {
             // TODO add your handling code here:
             run.exec("cmd.exe /c "+System.getProperty("user.dir")+"\\nodeDiagram.png");
@@ -526,8 +532,6 @@ public class NodeGenerator extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        //MGraph.path=route;
-        MGraph.generateGraphs();
          try {
             // TODO add your handling code here:
             run.exec("cmd.exe /c "+System.getProperty("user.dir")+"\\proccessDiagram.png");
