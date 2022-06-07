@@ -25,7 +25,7 @@ public class @Process extends Process {
 
     @Override
     public void init() {
-        //SimpleLogger.log(this, "SMALL NODE @Process");
+
     }
 
     numSync sync = new numSync(0);

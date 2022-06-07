@@ -6,9 +6,6 @@
 package generator.graph;
 
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -111,8 +108,8 @@ public class MGraph {
 
     static void generateNodeGraph() {
         String c = "graph G{\n";
-        String l1 = "[ label=\"@name\" shape=\"circle\" ]";
-        String l2 = "[ label=\"@name\" shape=\"octagon\" ]";
+        String l1 = "[ label=\"@name\" "+FileUtils.readFile(new File("graphs/style/styleNodeDiagram_Area.txt"))+" ]";
+        String l2 = "[ label=\"@name\" "+FileUtils.readFile(new File("graphs/style/styleNodeDiagram_Process.txt"))+" ]";
         for (GArea ga : areas) {
             c = c + ga.name + " " + l1.replace("@name", ga.name) + "\n";
             for (String nodes : ga.smallNodes) {
@@ -141,7 +138,7 @@ public class MGraph {
         c = c + "rankdir=\"LR\"" + "\nnewrank=\"true\" \n";
         for (GSmallNode n : nodes) {
             if (allSmallNodes.contains(n.name)) {
-                c = c + n.name + " [ shape=\"rectangle\" ] \n";
+                c = c + n.name + " [ "+FileUtils.readFile(new File("graphs/style/styleProcessDiagram_Process.txt"))+" ] \n";
             }
         }
         c = c + "\n\n";
@@ -154,7 +151,8 @@ public class MGraph {
         }
 
         for (GArea ga : areas) {
-            c = c + "\nsubgraph cluster" + ga.name + " {\n label=\"" + ga.name + "\"\nrank=\"same\"\n";
+            c = c + "\nsubgraph cluster" + ga.name + " {\n label=\"" + ga.name + "\"\nrank=\"same\"\n"+
+                    FileUtils.readFile(new File("graphs/style/styleProcessDiagram_Area.txt"))+"\n";
             for (String nodes : ga.smallNodes) {
                 c = c + nodes + "\n";
             }
@@ -163,8 +161,8 @@ public class MGraph {
 
         c = c + "\n}";
 
-        FileUtils.write("graphs/proccessDiagram", c, "txt");
-        generateImg("graphs/proccessDiagram","png","dot");
+        FileUtils.write("graphs/processDiagram", c, "txt");
+        generateImg("graphs/processDiagram","png","dot");
 
     }
     

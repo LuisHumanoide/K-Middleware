@@ -5,7 +5,6 @@
  */
 package generator;
 
-import static com.sun.glass.ui.Application.run;
 import generator.graph.MGraph;
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -242,7 +239,7 @@ public class NodeGenerator extends javax.swing.JFrame {
 
         jButton7.setBackground(new java.awt.Color(151, 181, 202));
         jButton7.setForeground(new java.awt.Color(0, 0, 0));
-        jButton7.setText("<html><small>View <br>proccess diagram</small></html>");
+        jButton7.setText("<html><small>View <br>process diagram</small></html>");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -523,8 +520,8 @@ public class NodeGenerator extends javax.swing.JFrame {
         // TODO add your handling code here:
          try {
             // TODO add your handling code here:
-            run.exec("cmd.exe /c "+System.getProperty("user.dir")+"\\nodeDiagram.png");
-            //run.exec("TemplateBigNode.java");
+            String command="cmd.exe /c "+System.getProperty("user.dir")+"\\"+"graphs\\nodeDiagram.png";
+            run.exec(command);
         } catch (IOException ex) {
             Logger.getLogger(NodeGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -534,8 +531,8 @@ public class NodeGenerator extends javax.swing.JFrame {
         // TODO add your handling code here:
          try {
             // TODO add your handling code here:
-            run.exec("cmd.exe /c "+System.getProperty("user.dir")+"\\proccessDiagram.png");
-            //run.exec("TemplateBigNode.java");
+            String command="cmd.exe /c "+System.getProperty("user.dir")+"\\"+"graphs\\processDiagram.png";
+            run.exec(command);
         } catch (IOException ex) {
             Logger.getLogger(NodeGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
